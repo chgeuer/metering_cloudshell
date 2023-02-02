@@ -1,0 +1,15 @@
+{
+	"publisher": {
+		"aadTenantId": "",
+		"subscriptionId": "",
+		"resourceGroup": "",
+		"location": "westeurope",
+		"optional": {
+			"storageAccountName": "",
+			"containerName": "",
+			"keyVaultName": ""
+		}
+	},
+	"customers": {
+	}
+}

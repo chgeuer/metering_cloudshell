@@ -1,0 +1,41 @@
+{
+  "publisher": {
+    "aadTenantId": "geuer-pollmann.de",
+    "subscriptionId": "706df49f-998b-40ec-aed3-7f0ce9c67759",
+    "resourceGroup": "longterm4",
+    "location": "westeurope",
+    "optional": {
+      "storageAccountName": "k53rhogdavblgg",
+      "containerName": "public",
+      "keyVaultName": "k53rhogdavblgg"
+    },
+    "idp": {
+      "issuer": "https://k53rhogdavblgg.blob.core.windows.net/public",
+      "keyUri": "https://k53rhogdavblgg.vault.azure.net/keys/idpkey",
+      "keyId": "https://k53rhogdavblgg.vault.azure.net/keys/idpkey/c8d3d9130eb24bf083cc83318847c3c2",
+      "keyJson": {
+        "kid": "https://k53rhogdavblgg.vault.azure.net/keys/idpkey/c8d3d9130eb24bf083cc83318847c3c2",
+        "keyOps": [ "sign" ],
+        "kty": "RSA",
+        "e": "AQAB",
+        "n": "8jr94TXm54XS0olHWNh1meLii6QZ6A0rr0SxcLA8DbpAQO61DG/rXT3sMFtuo6u7tmU63wJeFCvjd2m9emzjmhVU7E3x+//CXBEVhpsW6/LlV8u9AUqv16fuFpIfVy6/WC+UQOoyNrAkT+LFHOayombK+PgmOeBKB/gKk3722P9L9Ewo2LFnf2Sp86fGfjcEm7kpjJv9kR4v4AOCCG922rzQvNbG5t+oyUO6OU+MRb5gcoYzA4RnTY0h1mPjeXI01lfTKi0HI8y+vFeQ+L70MX955cK+Hc3d1ulKMeXFuf5x9KzADKFMiOf3bu1QiXPv04VoBForzkoco7sg6rrNPeQQJEbrWrdn91YiC4sd6bNOiCnpcODvktXeET6iuW61uAUN/27qFY+nR9iq96bcRXeih9jc2xRwarNH+Zw04ZIhTuOQzSCccBulnrFEtsTY0zL45sa4sVAQ8QZz1Rvzb28v4BWzw3qp54BoRkbZkh7GzPnNSw/TmlLIyzLX0kphoW2bg1iomaZ0WGSodOd+p67816cmhM5TPUjmkgjQuh7ZT6Ngu+7wcauVLu55e99edGIosSZQDQTMsdEyWDVfvNiQkob1E2WA8JskckyYNc9JHF60uj2HXRYn3TJk0+WWZI/l/zGuvOml3L9N82hfTuNWE77WATDcAdlpvN3Gu3E="
+      }
+    }
+  },
+  "customers": {
+    "724467b5-bee4-484b-bf13-d6a5505d2b51": {
+      "mrg-chgpnexttry": {
+        "uamiClientId": "994e8a97-26e0-458c-82ec-1ea6730d8e41",
+        "tenantId": "942023a6-efbe-4d97-a72d-532ef7337595",
+        "subject": "metering-submission-via-uami from geuer-pollmann.de",
+        "audience": "api://AzureADTokenExchange",
+        "uamiName": "metering-submission-uami",
+        "billing": {
+          "resourceId": "e075c8e7-d99f-4438-82cd-5245592469c3",
+          "resourceUri": "/subscriptions/724467b5-bee4-484b-bf13-d6a5505d2b51/resourceGroups/managed-app-resourcegroup/providers/Microsoft.Solutions/applications/chgpnexttry"
+        },
+        "planName": "plan1"
+      }
+    }
+  }
+}
