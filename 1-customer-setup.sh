@@ -27,7 +27,7 @@ uamiDeploymentResult="$( az deployment group create \
       sub="${idp_sub}" \
       aud="${idp_aud}" \
       issuerUrl="$( get-value-or-fail '.publisher.idp.issuer' )" \
-  --output json )"
+  --output json 2>/dev/null )"
 
 uamiJson="$( echo "${uamiDeploymentResult}" | jq '.properties.outputs.uami.value' )"
 
