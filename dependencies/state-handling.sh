@@ -9,7 +9,7 @@ basedir="$( dirname "$( readlink -f "$0" )" )"
 CONFIG_FILE="${basedir}/config.json"
 if [ ! -f "$CONFIG_FILE" ]; then
     cp "${basedir}/dependencies/0-config-template.json" "${CONFIG_FILE}"
-    echo "✏️ You need to configure deployment settings in ${CONFIG_FILE}" 
+    echo "✏️ You need to configure deployment settings in ${CONFIG_FILE}"
     exit 1
 fi
 

@@ -7,10 +7,12 @@ The ISV user running the scripts must be an Owner on the managed apps, i.e. be l
 ## Install the solution
 
 1. Sign-in to https://shell.azure.com/, and open a `bash` session (**not** Powershell)
-
-2. run `git clone https://github.com/chgeuer/metering_cloudshell`
-
-   
+2. `git clone https://github.com/chgeuer/metering_cloudshell`
+3. `cd metering_cloudshell`
+4. `./0-isv-setup.sh`
+5. `code ./config.json`
+6. Fill in the `publisher/aadTenantId`, `publisher/subscriptionId` and `publisher/resourceGroup` properties with the ISV backend, and save the file using `Ctrl-S`
+7. Run `./0-isv-setup.sh` again
 
 
 

@@ -100,8 +100,8 @@ dateTime="${dateTime//:/-}"
 dateTime="${dateTime/T/--}"
 dateTime="${dateTime/Z/}"
 
-directory="clouddrive/${customer_subscription}/${managed_resource_group_name}/$( echo "${marketplace_metering_request}" | jq -r '.dimension')"
-mkdir --parents "${directory}"
+directoryForSubmissionTraces="${HOME}/clouddrive/${customer_subscription}/${managed_resource_group_name}/$( echo "${marketplace_metering_request}" | jq -r '.dimension')"
+mkdir --parents "${directoryForSubmissionTraces}"
 
 echo "POST /api/usageEvent?api-version=2018-08-31 HTTP/1.1
 Host: marketplaceapi.microsoft.com
@@ -111,11 +111,11 @@ AuthorizationDecodedJSON: Bearer $( echo "${isv_metering_access_token}" | jq -Rc
 
 ${marketplace_metering_request}
 
-${marketplace_metering_response}" > "${directory}/${dateTime}-UTC.json"
+${marketplace_metering_response}" > "${directoryForSubmissionTraces}/${dateTime}-UTC.json"
 
 echo "-REQUEST--------------------------------"
 echo "${marketplace_metering_request}" | jq .
 echo "-RESPONSE-------------------------------"
 echo "${marketplace_metering_response}" | sed '1,/^\r\{0,1\}$/d' | jq .
 echo "-TRACE----------------------------------"
-echo "Wrote trace to ${directory}/${dateTime}-UTC.json"
+echo "Wrote trace to ${directoryForSubmissionTraces}/${dateTime}-UTC.json"
