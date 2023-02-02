@@ -78,6 +78,6 @@ put-value \
   "$( echo "${managedAppDetails}" | jq -r '.billing.resourceUri' )" 
 
 put-value \
-  ".customers[\"${customer_subscription}\"][\"${managed_resource_group_name}\"].plan.name" \
-  "$( echo "${managedAppDetails}" | jq -r '.planName' )" 
+  ".customers[\"${customer_subscription}\"][\"${managed_resource_group_name}\"].planName" \
+  "$( echo "${managedAppDetails}" | jq -r '.plan.name' )" 
 

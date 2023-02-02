@@ -16,7 +16,7 @@ The ISV user running the scripts must be an Owner on the managed apps, i.e. be l
 
 
 
- 
+> If you get warnings like `Warning BCP081: Resource type "..." does not have types available.`, ignore them.
 
 
 
