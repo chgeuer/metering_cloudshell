@@ -1,5 +1,21 @@
 # metering_cloudshell
 
+This repository contains a mechanism to emit one-time charges against an Azure Marketplace managed application, running in the customer tenant, **from the ISV tenant**. There is no need to have a compute resource (like a virtual machine) running in the customer subscription.
+
+The ISV user running the scripts must be an Owner on the managed apps, i.e. be listed in the managed app's marketplace configuration, or member of a group which is authorized to manage the managed app.
+
+## Install the solution
+
+1. Sign-in to https://shell.azure.com/, and open a `bash` session (**not** Powershell)
+
+2. run `git clone https://github.com/chgeuer/metering_cloudshell`
+
+   
+
+
+
+ 
+
 
 
 The ISV resource group with the KeyVault containing the issuance key for workload identity federation, as well as the storage account containing the IdP metadata
