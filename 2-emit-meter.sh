@@ -106,17 +106,8 @@ marketplace_metering_response="$( curl \
 
 dateTime="$( date_readable "$( echo "${marketplace_metering_request}" | jq -r '.effectiveStartTime' )" )"
 
-if [[ -z $AZURE_HTTP_USER_AGENT ]]; then
-   stateDirectory="."
-else
-   stateDirectory="${HOME}/clouddrive"
-fi
-
-echo "Using ${stateDirectory}"
-
-
-
-directoryForSubmissionTraces="${stateDirectory}/${customer_subscription}/${managed_resource_group_name}/$( echo "${marketplace_metering_request}" | jq -r '.dimension')"
+# stateDir comes from dependencies/state-handling.sh
+directoryForSubmissionTraces="${stateDir}/${customer_subscription}/${managed_resource_group_name}/$( echo "${marketplace_metering_request}" | jq -r '.dimension')"
 mkdir --parents "${directoryForSubmissionTraces}"
 
 echo "POST /api/usageEvent?api-version=2018-08-31 HTTP/1.1

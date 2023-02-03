@@ -2,11 +2,19 @@
 
 trap "exit 1" TERM
 
-basedir="$( pwd )"
+# basedir="$( pwd )"
 basedir="$( dirname "$( readlink -f "$0" )" )"
-# basedir="/mnt/c/github/chgeuer/metered-billing-accelerator/scripts/Metering.SharedResourceBroker"
 
-CONFIG_FILE="${basedir}/config.json"
+if [[ -z $AZURE_HTTP_USER_AGENT ]]; then
+   stateDir="${basedir}/metering-data"
+else
+  # When running in Azure Cloudshell, the data should be stored in the file share.
+  stateDir="${HOME}/clouddrive/metering-data"
+fi
+export stateDir
+mkdir --parents "${stateDir}"
+CONFIG_FILE="${stateDir}/config.json"
+
 if [ ! -f "$CONFIG_FILE" ]; then
     cp "${basedir}/dependencies/0-config-template.json" "${CONFIG_FILE}"
     echo "✏️ You need to configure deployment settings in ${CONFIG_FILE}"
