@@ -4,11 +4,29 @@ trap "exit 1" TERM
 export TOP_PID=$$
 source "$( dirname "$( readlink -f "$0" )" )/dependencies/state-handling.sh"
 
-export customer_subscription="724467b5-bee4-484b-bf13-d6a5505d2b51"
-export managed_resource_group_name="mrg-chgpnexttry"
-hour_in_the_past='-20 hour'
-dimensionName="dimension-payg"
-quantity=1
+if [ $# -ne 5 ]; then 
+  echo "Specify the following parameters: 
+  1: customer subscription id.
+     Example: 724467b5-bee4-484b-bf13-d6a5505d2b51
+  2: customer managed resource group's name
+     Example: mrg-chgpnexttry
+  3: how many hours ago the usage should be reported (must be last 24 hours)
+     Example: 3
+  4: the name of the dimension
+     example: gigabytes-data
+  5: the quantity to report
+     Example: 30.5
+
+      $0 724467b5-bee4-484b-bf13-d6a5505d2b51 mrg-chgpnexttry 3 gigabytes-data 30.5
+  "
+  exit 1
+fi
+
+export customer_subscription="$1"
+export managed_resource_group_name="$2"
+hour_in_the_past="-${$3} hour"
+dimensionName="$4"
+quantity="$5"
 
 customerJson=$( get-value-or-fail ".customers[\"${customer_subscription}\"][\"${managed_resource_group_name}\"]" )
 
