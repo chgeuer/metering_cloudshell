@@ -1,5 +1,7 @@
 # metering_cloudshell
 
+Walkthrough video here: https://www.youtube.com/watch?v=2vKbkPnW6Rg
+
 This repository contains a mechanism to emit one-time charges against an Azure Marketplace managed application, running in the customer tenant, **from the ISV tenant**. There is no need to have a compute resource (like a virtual machine) running in the customer subscription.
 
 The ISV user running the scripts must be an Owner on the managed apps, i.e. be listed in the managed app's marketplace configuration, or member of a group which is authorized to manage the managed app.
@@ -8,16 +10,20 @@ The ISV user running the scripts must be an Owner on the managed apps, i.e. be l
 
 1. Sign-in to https://shell.azure.com/, and open a `bash` session (**not** Powershell)
 2. `git clone https://github.com/chgeuer/metering_cloudshell`
-3. `cd metering_cloudshell`
-4. `./0-isv-setup.sh`
-5. `code ./config.json`
-6. Fill in the `publisher/aadTenantId`, `publisher/subscriptionId` and `publisher/resourceGroup` properties with the ISV backend, and save the file using `Ctrl-S`
-7. Run `./0-isv-setup.sh` again
+3. Setup the ISV side
+   - `./metering_cloudshell/0-isv-setup.sh`
+   - `./metering_cloudshell/0-add-defaults.sh`
+   - Edit the `clouddrive/metering-data/config.json` if you like to change the defaults
+   - `./metering_cloudshell/0-isv-setup.sh`
 
+## Submit usage
+
+1. List the current customers `./metering_cloudshell/1-list-customers.sh`
+2. Connect to a customer deployment: `./metering_cloudshell/1-connect-customer-deployment.sh <<subscription-id-from-previous-step>> <<managed-resource-group-name-from-previous-step>>`
+3. Submit the usage you want to emit: `./metering_cloudshell/2-emit-meter.sh <<subscription-id-from-previous-step>> <<managed-resource-group-name-from-previous-step>> hour-delta dimension amount`
 
 
 > If you get warnings like `Warning BCP081: Resource type "..." does not have types available.`, ignore them.
-
 
 
 The ISV resource group with the KeyVault containing the issuance key for workload identity federation, as well as the storage account containing the IdP metadata
