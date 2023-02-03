@@ -7,3 +7,6 @@ else
 fi
 
 echo "Using ${stateDirectory}"
+
+
+echo "-$1 hour"

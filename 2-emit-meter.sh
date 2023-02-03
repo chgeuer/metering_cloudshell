@@ -24,7 +24,7 @@ fi
 
 export customer_subscription="$1"
 export managed_resource_group_name="$2"
-hour_in_the_past="-${$3} hour"
+hour_in_the_past="-$3 hour"
 dimensionName="$4"
 quantity="$5"
 
