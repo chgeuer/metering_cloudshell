@@ -2,7 +2,7 @@
 
 trap "exit 1" TERM
 export TOP_PID=$$
-source ./dependencies/state-handling.sh
+source "$( dirname "$( readlink -f "$0" )" )/dependencies/state-handling.sh"
 
 export customer_subscription="724467b5-bee4-484b-bf13-d6a5505d2b51"
 export managed_resource_group_name="mrg-chgpnexttry"

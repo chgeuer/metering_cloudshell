@@ -4,7 +4,7 @@
 
 trap "exit 1" TERM
 export TOP_PID=$$
-source ./dependencies/state-handling.sh
+source "$( dirname "$( readlink -f "$0" )" )/dependencies/state-handling.sh"
 
 az config set extension.use_dynamic_install=yes_without_prompt > /dev/null 2>&1
 
