@@ -29,6 +29,9 @@ dimensionName="$4"
 quantity="$5"
 
 customerJson=$( get-value-or-fail ".customers[\"${customer_subscription}\"][\"${managed_resource_group_name}\"]" )
+uami_id="$( echo "${customerJson}" | jq -r '.uamiClientId' )"
+
+[[ -z "${uami_id}" ]] && { echo "It seems subscription ${customer_subscription} / resource group ${managed_resource_group_name} are not properly connected." > /dev/tty ; kill -s TERM $TOP_PID; }
 
 function create_base64_url {
     local base64text="$1"
