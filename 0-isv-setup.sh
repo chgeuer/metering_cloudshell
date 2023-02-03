@@ -22,7 +22,7 @@ _ignore="$( az group create \
 idpStorageDeploymentResult="$( az deployment group create \
   --subscription   "$( get-value-or-fail '.publisher.subscriptionId' )" \
   --resource-group "$( get-value-or-fail '.publisher.resourceGroup' )" \
-  --template-file  "./templates/0-isv-setup.bicep" \
+  --template-file  "${basedir}//templates/0-isv-setup.bicep" \
   --parameters \
     currentUserId="$(      az ad signed-in-user show | jq -r '.id' )" \
     storageAccountName="$( get-value '.publisher.optional.storageAccountName' )" \

@@ -4,7 +4,7 @@ trap "exit 1" TERM
 
 # basedir="$( pwd )"
 basedir="$( dirname "$( readlink -f "$0" )" )"
-
+export basedir
 if [[ -z $AZURE_HTTP_USER_AGENT ]]; then
    stateDir="${basedir}/metering-data"
 else
