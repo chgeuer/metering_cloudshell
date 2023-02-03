@@ -4,6 +4,16 @@ trap "exit 1" TERM
 export TOP_PID=$$
 source "$( dirname "$( readlink -f "$0" )" )/dependencies/state-handling.sh"
 
+
+if [ $# -ne 3 ]; then 
+  echo "Specify the customer's subscription id and the managed resource group's name, for example: 
+
+      $0 724467b5-bee4-484b-bf13-d6a5505d2b51 mrg-chgpnexttry
+      
+  "
+  exit 1
+fi
+
 export customer_subscription="$1"
 export managed_resource_group_name="$2"
 
