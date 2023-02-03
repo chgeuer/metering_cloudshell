@@ -22,6 +22,14 @@ function json_to_base64 {
     create_base64_url "$( echo -n "${jsonText}" | base64 --wrap=0 )"
 }
 
+function date_readable {
+  local dateTime="$1"
+  dateTime="${dateTime//:/-}"
+  dateTime="${dateTime/T/--}"
+  dateTime="${dateTime/Z/}"
+  echo "${dateTime}"
+}
+
 # `jq -c -M` gives a condensed/Monochome(no ANSI codes) representation
 header="$( echo "{}"                                                   | \
   jq --arg x "JWT"                                           '.typ=$x' | \
@@ -79,13 +87,14 @@ isv_metering_access_token="$( curl \
 # echo "${isv_metering_access_token}" | jq -R 'split(".") | (.[0], .[1]) | @base64d | fromjson'
 
 # xxd and envsubst missing in Azure Cloud shell
-marketplace_metering_request="$( echo "{}" | \
-      jq --arg x "$( echo "${customerJson}" | jq -r '.billing.resourceId' )"          '.resourceId=$x' | \
-      jq --arg x "$( echo "${customerJson}" | jq -r '.billing.resourceUri' )"         '.resourceUri=$x' | \
-      jq --arg x "$( echo "${customerJson}" | jq -r '.planName' )"                    '.planId=$x'     | \
-      jq --arg x "$( date --utc --date="${hour_in_the_past}" '+%Y-%m-%dT%H:00:00Z' )" '.effectiveStartTime=$x' | \
-      jq --arg x "${dimensionName}"                                                   '.dimension=$x'  | \
-      jq --arg x "${quantity}"                                                        '.quantity=($x | fromjson)' )"
+marketplace_metering_request="$( echo "{}" \
+  | jq --arg x "$( echo "${customerJson}" | jq -r '.billing.resourceId' )"          '.resourceId=$x' \
+  | jq --arg x "$( echo "${customerJson}" | jq -r '.billing.resourceUri' )"         '.resourceUri=$x' \
+  | jq --arg x "$( echo "${customerJson}" | jq -r '.planName' )"                    '.planId=$x' \
+  | jq --arg x "$( date --utc --date="${hour_in_the_past}" '+%Y-%m-%dT%H:00:00Z' )" '.effectiveStartTime=$x' \
+  | jq --arg x "${dimensionName}"                                                   '.dimension=$x'  \
+  | jq --arg x "${quantity}"                                                        '.quantity=($x | fromjson)' \
+  )"
 
 marketplace_metering_response="$( curl \
   --include --no-progress-meter \
@@ -95,12 +104,19 @@ marketplace_metering_response="$( curl \
   --header "Authorization: Bearer ${isv_metering_access_token}" \
   --data "${marketplace_metering_request}" )" 
 
-dateTime="$( echo "${marketplace_metering_request}" | jq -r '.effectiveStartTime')"
-dateTime="${dateTime//:/-}"
-dateTime="${dateTime/T/--}"
-dateTime="${dateTime/Z/}"
+dateTime="$( date_readable "$( echo "${marketplace_metering_request}" | jq -r '.effectiveStartTime' )" )"
 
-directoryForSubmissionTraces="${HOME}/clouddrive/${customer_subscription}/${managed_resource_group_name}/$( echo "${marketplace_metering_request}" | jq -r '.dimension')"
+if [[ -z $AZURE_HTTP_USER_AGENT ]]; then
+   stateDirectory="."
+else
+   stateDirectory="${HOME}/clouddrive"
+fi
+
+echo "Using ${stateDirectory}"
+
+
+
+directoryForSubmissionTraces="${stateDirectory}/${customer_subscription}/${managed_resource_group_name}/$( echo "${marketplace_metering_request}" | jq -r '.dimension')"
 mkdir --parents "${directoryForSubmissionTraces}"
 
 echo "POST /api/usageEvent?api-version=2018-08-31 HTTP/1.1

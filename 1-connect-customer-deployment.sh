@@ -4,9 +4,8 @@ trap "exit 1" TERM
 export TOP_PID=$$
 source ./dependencies/state-handling.sh
 
-# https://docs.microsoft.com/en-us/azure/active-directory/develop/workload-identity-federation-create-trust
-export customer_subscription="724467b5-bee4-484b-bf13-d6a5505d2b51"
-export managed_resource_group_name="mrg-chgpnexttry"
+export customer_subscription="$1"
+export managed_resource_group_name="$2"
 
 value="$( get-value ".customers[\"${customer_subscription}\"][\"${managed_resource_group_name}\"].uamiClientId" )"
 
@@ -21,7 +20,7 @@ idp_sub="metering-submission-via-uami from $( get-value-or-fail '.publisher.aadT
 uamiDeploymentResult="$( az deployment group create \
   --subscription "${customer_subscription}" \
   --resource-group "${managed_resource_group_name}" \
-  --template-file "templates/1-customer-setup.bicep" \
+  --template-file "templates/1-connect-customer-deployments.bicep" \
   --parameters \
       identityName="${uami_name}" \
       sub="${idp_sub}" \
@@ -81,3 +80,4 @@ put-value \
   ".customers[\"${customer_subscription}\"][\"${managed_resource_group_name}\"].planName" \
   "$( echo "${managedAppDetails}" | jq -r '.plan.name' )" 
 
+# https://docs.microsoft.com/en-us/azure/active-directory/develop/workload-identity-federation-create-trust
