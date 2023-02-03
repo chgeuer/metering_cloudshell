@@ -29,13 +29,15 @@ idp_sub="metering-submission-via-uami from $( get-value-or-fail '.publisher.aadT
 uamiDeploymentResult="$( az deployment group create \
   --subscription "${customer_subscription}" \
   --resource-group "${managed_resource_group_name}" \
-  --template-file "${basedir}/templates/1-connect-customer-deployments.bicep" \
+  --template-file "${basedir}/templates/1-connect-customer-deployment.bicep" \
   --parameters \
       identityName="${uami_name}" \
       sub="${idp_sub}" \
       aud="${idp_aud}" \
       issuerUrl="$( get-value-or-fail '.publisher.idp.issuer' )" \
   --output json 2>/dev/null )"
+
+echo "${uamiDeploymentResult}" | jq > "${HOME}/uami-deploy.json"
 
 uamiJson="$( echo "${uamiDeploymentResult}" | jq '.properties.outputs.uami.value' )"
 
