@@ -28,9 +28,10 @@ The ISV user running the scripts must be an Owner on the managed apps, i.e. be l
 
 The ISV resource group with the KeyVault containing the issuance key for workload identity federation, as well as the storage account containing the IdP metadata
 
-
 ## How does it work
- 
+
+![Architecture Overview](pictures/2023-02-08--architecture.svg)
+
 - We need a managed identity on the customer side (in the managed resource group) that is authorized to emit usage to the marketplace metering API. 
 - In order to use that managed identity remotely, we use "workload identity federation" so remotely sign-in to that identity.
 - For that to work, we create a 'fake' identity provider on the ISV side, which consists of
@@ -55,3 +56,6 @@ The token signing key in KeyVault
 ![image-20230202225554925](pictures/image-20230202225554925.png)
 
 ![image-20230202225640362](pictures/image-20230202225640362.png)
+
+## Interactions
+
